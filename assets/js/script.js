@@ -20,7 +20,7 @@ const EXPERIENCE = [
   {
     role: "Senior Backend Platform Engineer",
     company: "State Farm",
-    location: "Texas, USA",
+    location: "USA",
     period: "Jul 2025 — Present",
     current: true,
     bullets: [
