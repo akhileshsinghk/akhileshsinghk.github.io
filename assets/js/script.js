@@ -4,21 +4,21 @@
 const SKILLS = [
   { title: "Programming", tags: ["Python (Expert)", "SQL", "JavaScript"] },
   { title: "LLMs & AI Frameworks", tags: ["GPT-4 / 4o", "Claude 3 / 3.5", "LLaMA", "BERT", "T5", "OpenAI API", "Anthropic API", "Hugging Face"] },
-  { title: "Agentic AI", tags: ["LangChain", "LangGraph", "LlamaIndex", "ReAct Patterns", "Function Calling", "Multi-Agent Systems"] },
-  { title: "Prompt Engineering", tags: ["Few-shot Learning", "Chain-of-Thought", "System Prompts", "Prompt Templates"] },
+  { title: "Agentic AI", tags: ["LangChain", "LangGraph", "LlamaIndex", "ReAct Patterns", "Function Calling", "Tool Use", "Multi-Agent Systems"] },
+  { title: "Prompt Engineering", tags: ["Few-shot Learning", "Chain-of-Thought", "System Prompts", "Temperature Tuning", "Prompt Templates"] },
   { title: "RAG & Vector DBs", tags: ["FAISS", "Pinecone", "Weaviate", "Milvus", "Semantic Search", "Embeddings"] },
   { title: "Backend & APIs", tags: ["FastAPI", "Flask", "Django", "REST APIs", "WebSockets", "Async Programming"] },
-  { title: "ML Frameworks", tags: ["PyTorch", "TensorFlow", "Scikit-learn", "XGBoost", "Transfer Learning"] },
-  { title: "Data Engineering", tags: ["Databricks", "Delta Lake", "PySpark", "MLflow", "Spark SQL", "Lakehouse"] },
+  { title: "ML Frameworks", tags: ["PyTorch", "TensorFlow", "Scikit-learn", "XGBoost", "Model Fine-tuning", "Transfer Learning"] },
+  { title: "Data Engineering & Analytics", tags: ["Databricks", "Delta Lake", "PySpark", "MLflow", "Spark SQL", "Lakehouse", "Feature Store"] },
   { title: "Cloud & DevOps", tags: ["Azure", "AWS", "Docker", "Git / GitHub", "CI/CD"] },
-  { title: "Observability", tags: ["OpenTelemetry", "Langfuse", "Grafana", "Datadog", "Structured Logging"] },
-  { title: "Distributed Systems", tags: ["Microservices", "gRPC", "Kafka", "Saga Orchestration", "Circuit Breakers"] },
+  { title: "Observability & Monitoring", tags: ["Azure Monitor", "OpenTelemetry", "Langfuse", "Grafana", "Datadog", "Distributed Tracing", "SLO/SLI Dashboards"] },
+  { title: "Distributed Systems & Messaging", tags: ["Microservices", "gRPC", "GraphQL", "Kafka", "Azure Service Bus", "Saga Orchestration", "Circuit Breakers", "Dead-Letter Queues"] },
   { title: "Compliance & Data Privacy", tags: ["PII De-identification", "RBAC", "NAIC Model Law", "Audit Trails", "SHA-256 Tamper-Evidence"] },
 ];
 
 const EXPERIENCE = [
   {
-    role: "Senior Backend Platform Engineer",
+    role: "Senior AI/ML Engineer",
     company: "State Farm",
     location: "Texas, USA",
     period: "Jul 2025 — Present",
@@ -41,7 +41,7 @@ const EXPERIENCE = [
     tech: ["Python 3.12", "FastAPI", "LangGraph", "Claude 3.5 Sonnet", "GPT-4o", "Milvus", "Databricks", "PySpark", "MLflow", "Docker"],
   },
   {
-    role: "Senior Backend Engineer",
+    role: "AI/ML Engineer",
     company: "CIBC",
     location: "USA",
     period: "Feb 2024 — May 2025",
@@ -56,11 +56,13 @@ const EXPERIENCE = [
       "Improved model deployment velocity by 46%, enabling rapid experimentation across 15+ enterprise AI/ML use cases.",
       "Created LLM-powered risk-summarization tools (GPT-4o + Llama 3) ensembled with an XGBoost tabular risk model, processing 400K+ transaction records daily — analyst throughput up 22%.",
       "Implemented function-calling and tool-orchestration for LLM agents (LangGraph + Claude 3.5 Sonnet) across core banking platforms integrated via gRPC and Kafka.",
+      "Built interactive analytics demos and rapid prototypes (Streamlit, Gradio, Databricks AI/BI dashboards) to accelerate model-validation and business-approval decisions, securing funding for 2 additional enterprise AI initiatives.",
+      "Integrated structured/unstructured enterprise data (JSON, CSV, PDF extraction) via Unity Catalog and Azure Service Bus event-driven ingestion, handling 8M+ daily data points with robust error handling, data-quality checks, and dead-letter queues.",
     ],
     tech: ["Django", "LangGraph", "GPT-4o", "Pinecone", "Weaviate", "MLflow", "PyTorch", "Kafka", "gRPC"],
   },
   {
-    role: "Machine Learning Engineer",
+    role: "Senior Python Developer & ML Engineer",
     company: "TCS",
     location: "USA",
     period: "Dec 2019 — Dec 2023",
@@ -71,7 +73,7 @@ const EXPERIENCE = [
     ],
     extra: [
       "Developed domain-specific prompt engineering (chain-of-thought, few-shot, Pydantic-validated JSON schemas) for fault-code-to-repair mapping — accuracy up 39%, escalations down 46%.",
-      "Implemented semantic search over 20K+ technical manuals using sentence-transformers and BERT re-ranking — retrieval precision up 30%.",
+      "Implemented semantic search over 20K+ technical manuals using sentence-transformers and BERT re-ranking — retrieval precision up 30%. Designed function-calling tool workflows exposing telematics APIs, DMS queries, and parts-inventory endpoints for autonomous predictive-maintenance alerts and parts-reorder recommendations.",
       "Integrated OpenAI API and Azure OpenAI with distributed FastAPI microservices across AWS US-East and India, handling rate limiting, retries, and streaming telemetry via Kafka.",
       "Reduced LLM inference costs by 36% through caching, prompt compression, and batched inference across the connected-vehicle fleet.",
     ],
@@ -93,7 +95,7 @@ const EXPERIENCE = [
     tech: ["Rasa", "spaCy", "BERT", "Flask", "PostgreSQL"],
   },
   {
-    role: "ML Engineer",
+    role: "ML Engineer Intern",
     company: "Vowels Information",
     location: "India",
     period: "Jan 2018 — Aug 2018",
@@ -246,36 +248,6 @@ function initReveal() {
 }
 
 /* =========================================================
-   Animated counters
-========================================================= */
-function initCounters() {
-  const nums = document.querySelectorAll(".stat-num");
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      io.unobserve(el);
-      const target = parseFloat(el.dataset.count);
-      const decimals = parseInt(el.dataset.decimal || "0", 10);
-      const prefix = el.dataset.prefix || "";
-      const suffix = el.dataset.suffix || "";
-      const duration = 1400;
-      const start = performance.now();
-
-      function tick(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const value = target * eased;
-        el.textContent = prefix + value.toFixed(decimals) + suffix;
-        if (progress < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    });
-  }, { threshold: 0.5 });
-  nums.forEach(n => io.observe(n));
-}
-
-/* =========================================================
    Contact form -> mailto
 ========================================================= */
 function initContactForm() {
@@ -309,7 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initTheme();
   initNav();
   initReveal();
-  initCounters();
   initContactForm();
   initMisc();
 });
